@@ -109,7 +109,7 @@ function loadBot(name, id) {
 	sTypeINT = id || sTypeINT;
 	sType = name || sType;
 
-	osBot = require("./bots/"+sType+"/"+sType+".js");
+	osBot = require("../bots/"+sType+"/"+sType+".js");
 	var { name, start } = osBot;
 
 	_.con("BOT '"+name+"' loaded");
