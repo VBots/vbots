@@ -3,11 +3,14 @@ node_modules
 
 # Bots
 /bots/*
-
-!/bots/.template
+!/bots/.template/
 
 # Data
 /data/*
 
 # Other
 package-lock.json
+
+
+!*.keep
+!**/*.keep
