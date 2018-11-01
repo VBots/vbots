@@ -2,10 +2,12 @@
 node_modules
 
 # Bots
-bots
+/bots/*
+
+!/bots/.template
 
 # Data
-data
+/data/*
 
 # Other
 package-lock.json
