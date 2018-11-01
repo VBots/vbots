@@ -1,2 +1,2 @@
 # vbots
-Main 
+VK Bots

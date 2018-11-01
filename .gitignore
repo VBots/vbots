@@ -1,0 +1,11 @@
+# Dependency directories
+node_modules
+
+# Bots
+bots
+
+# Data
+data
+
+# Other
+package-lock.json
