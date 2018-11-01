@@ -1,5 +1,5 @@
-var _ = require("./src/helper"),
-	getBots = new (require("./src/getBots"))(false);
+var _ = require("./utils/helper"),
+	getBots = new (require("./utils/getBots"))(false);
 
 process.on('uncaughtException', (err) => {
 	console.log("\n*===*\nERR:");
@@ -15,11 +15,20 @@ var sType = false, //  Current BOT
 
 for (var argn = 2; argn < process.argv.length; argn++) {
 
-	if(["-p", "-d", "-t"].includes(process.argv[argn])) {
+	if(["-p", "-d", "-t", "-i"].includes(process.argv[argn])) {
+
+		if (process.argv[argn] === '-i') {
+			var safeI = parseInt(process.argv[argn + 1]); 
+			sTypeINT = isNaN(safeI)? sTypeINT: safeI;
+			// console.log("Arg: "+process.argv[argn]+" : "+process.argv[argn+1])
+
+			argn++;
+			continue;
+		}
 
 		if (process.argv[argn] === '-t') {
-			var safeI = parseInt(process.argv[argn + 1]); 
-			sTypeINT = isNaN(safeI)?sTypeINT:safeI;
+			var safeStr = (process.argv[argn + 1]+"").toLowerCase(); 
+			sType = (safeStr.length>0)? safeStr: sType;
 			// console.log("Arg: "+process.argv[argn]+" : "+process.argv[argn+1])
 
 			argn++;
@@ -66,13 +75,15 @@ function startApp() {
 		var dataUser = false;
 
 		// console.log(sTypeINT)
-
-		if(sTypeINT == -1 || sTypeINT > bots.length-1) {
+		if(sType) {
+			loadBot(sType);
+		}
+		else if(sTypeINT == -1 || sTypeINT > bots.length-1) {
 			_.ccon("FAI K", !0);
 			setTimeout(trySelect, 1e3, bots);
 		}
-		else if(bots[sTypeINT]) {
-			loadBot(bots[sTypeINT], sTypeINT)
+		 if(bots[sTypeINT]) {
+			loadBot(bots[sTypeINT], sTypeINT);
 		}
 	})
 	.load();
