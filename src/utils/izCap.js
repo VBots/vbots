@@ -31,6 +31,11 @@ class izCap {
 		this.onLoad.push(f);
 		return this;
 	}
+
+	setBeforeExitSave(f) {
+		this.saveExitCB = f;
+		return this;
+	}
 	
 	load() {
 		var self = this;
@@ -52,7 +57,7 @@ class izCap {
 	
 	save(zExit=false, infot=true, _cb=false) {
 		var self = this;
-		
+		if(this.saveExitCB && zExit) this.saveExitCB();
 		fs.writeFile(this.filePath+'.json', JSON.stringify(this.arrayCap, null, '\t'), function(err) {
 			if(err) throw err;
 			if(zExit) self.isExitSave = true;
