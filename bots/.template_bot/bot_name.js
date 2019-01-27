@@ -3,8 +3,7 @@ const { VK, Keyboard } = require('vk-io');
 
 const vk = new VK();
 const { updates } = vk;
-const groupID = 123456777,
-	token = "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT";
+const { groupID, token } = require('./.token.js');
 
 module.exports = xbot = {
 	name: "3T xo",
@@ -17,7 +16,6 @@ function tryStart() {
 
 function start() {
 	_.con(xbot.name+" start");
-	
 	run().catch(console.error);
 }
 
@@ -44,18 +42,16 @@ updates.use(async (context, next) => {
 });
 
 // Set online status
-(async function ggw() {
-	const { status } = await vk.api.groups.getOnlineStatus({
-		group_id: groupID
-	});
+setInterval(async ()=> {
+	const { status } = await vk.api.groups.getOnlineStatus({ group_id: groupID });
 
 	if(status == "none")
-		await vk.api.groups.enableOnline({
-			group_id: groupID
-		});
-})();
+		await vk.api.groups.enableOnline({ group_id: groupID });
+}, 6e4);
 
-require("./q")(vk, Keyboard);
+const q = require("./qore");
+module.exports.q = q;
+q(vk, Keyboard, xbot.name);
 
 async function run() {
 	await vk.updates.startPolling();
